@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Інтерактивна карта</title>
+    <style>
+        #map {
+            height: 500px;
+            width: 100%;
+        }
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 18px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <h3>Інтерактивна карта з Google Maps API</h3>
+    <div id="map"></div>
+    
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBRKZC7-buSBmv1nn2NyGBlJqZfgGnhHJ4&callback=initMap">
+    </script>
+    <script>
+        function initMap() {
+            const center = { lat: 50.4501, lng: 30.5234 }; 
+            const map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 10,
+                center: center,
+            });
+
+            map.addListener("click", (e) => {
+                addMarker(e.latLng, map);
+            });
+        }
+
+        function addMarker(location, map) {
+            const marker = new google.maps.Marker({
+                position: location,
+                map: map,
+            });
+            const infowindow = new google.maps.InfoWindow({
+                content: `<p>Координати: ${location.lat()}, ${location.lng()}</p>`,
+            });
+            marker.addListener("click", () => {
+                infowindow.open(map, marker);
+            });
+        }
+    </script>
+
+    <footer>
+        CREATED BY DANIIL LINIH 
+    </footer>
+</body>
+</html>
